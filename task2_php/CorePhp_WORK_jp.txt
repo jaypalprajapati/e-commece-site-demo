@@ -1,0 +1,23 @@
+datbase{task2_php}
+
+user-type{
+	Super_admin:1 -> testuser@kcsitglobal.com -> secret
+	Admin:2 -> admin@gmail.com ->secret
+	User:3 -> user@gmail.com ->secret
+	}
+
+Delete Method{
+		delete,
+		delete with ajex
+	     }
+
+image{
+	Image uplode,
+	edit page  image replace OR old image store, 
+	edit page image show and delete image then change photo
+     }
+
+filter with categorieslogin time session start and store user valuesdifferent user different model view and crud operation 
+
+
+

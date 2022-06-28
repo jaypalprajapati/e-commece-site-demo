@@ -1,0 +1,21 @@
+datbase{task2_lara}
+
+user-type{
+	Super_admin:1 -> testuser@kcsitglobal.com -> secret	
+	Admin:0 -> admin@gmail.com ->secret
+	User:2 -> user@gmail.com ->secret
+	}
+
+Delete Method{
+		SoftDelete,
+		HardDelete,
+		Category delete then same Product(catagor_id) Itemss delete.
+	     }
+Restore Method
+image{
+	Image uplode,
+	edit page  image replace OR old image store, 
+     }
+filter with categories
+login time session start and store user values
+different user different model view and crud operation 
