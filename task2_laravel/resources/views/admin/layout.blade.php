@@ -16,19 +16,19 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script type="text/javascript">
-        // $(document).ready(function() {
+        $(document).ready(function() {
 
-        //     $('.delete').click(function(e) {
+            $('.delete').click(function(e) {
 
-        //         if (!confirm('Are you sure you want to delete this product?')) {
+                if (!confirm('Are you sure you want to delete this product?')) {
 
-        //             e.preventDefault();
+                    e.preventDefault();
 
-        //         }
+                }
 
-        //     });
+            });
 
-        // });
+        });
     </script>
     <style>
         svg {
