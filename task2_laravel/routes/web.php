@@ -60,7 +60,9 @@ Route::get('product/restore/{id}', [ProductController::class, 'restore'])->name(
 
 Route::get('product/restore-all', [ProductController::class, 'restoreAll'])->name('product.restoreAll');
 
+Route::get('admin/restore/{id}', [AdminController::class, 'restore'])->name('admin.restore');
 
+Route::get('admin/restore-all', [AdminController::class, 'restoreAll'])->name('admin.restoreAll');
 
 Route::get('category/restore/{id}', [CategoryController::class, 'restore'])->name('category.restore');
 

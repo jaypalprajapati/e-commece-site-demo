@@ -33,7 +33,7 @@
         <th width="280px">Action</th>
         @endif
     </tr>
-    @foreach($data as $key => $value)
+    @foreach($data1 as $key => $value)
     <tr>
         <td>{{ ++$i }}</td>
         <td>{{ $value->name }}</td>
@@ -46,15 +46,16 @@
         </td>
         @if(auth()->user()->type ==' 1')
         <td>
+            @if(request()->has('trashed'))
+            <a href="{{ route('admin.restore', $value->id) }}" class="btn btn-success">Restore</a>
+            @else
             <form action="{{ route('admin.destroy',$value->id) }}" method="POST">
-
                 <a class="btn btn-primary" href="{{ route('admin.edit',$value->id) }}">Edit</a>
                 @csrf
                 @method('DELETE')
-
                 <button type="submit" class="btn btn-danger delete">Delete</button>
-
             </form>
+            @endif
         </td>
         @endif
     </tr>
@@ -62,4 +63,12 @@
 </table>
 
 {!! $data->links() !!}
+<div class="float-end" style="text-align:right;">
+    @if(request()->has('trashed'))
+    <a href="{{ route('admin.index') }}" class="btn btn-info">View All Users</a>
+    <a href="{{ route('admin.restoreAll') }}" class="btn btn-success">Restore All</a>
+    @else
+    <a href="{{ route('admin.index', ['trashed' => 'admin']) }}" class="btn btn-primary">View Deleted Users</a>
+    @endif
+</div>
 @endsection

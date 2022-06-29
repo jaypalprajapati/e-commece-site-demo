@@ -5,11 +5,13 @@ user-type{
 	Admin:0 -> admin@gmail.com ->secret
 	User:2 -> user@gmail.com ->secret
 	}
+Category  unique,
 
 Delete Method{
 		SoftDelete,
 		HardDelete,
 		Category delete then same Product(catagor_id) Itemss delete.
+		alert for confirmation 
 	     }
 Restore Method
 image{

@@ -26,13 +26,18 @@ class AdminController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $data = USer::latest()->paginate(3);
-        $datanew['newdata'] = " ";
+        $data = User::latest()->paginate(4);
+        if ($request->has('trashed')) {
 
-        return view('admin.index', compact('data', 'datanew'))
-            ->with('i', (request()->input('page', 1) - 1) * 3);
+            $data1 = User::onlyTrashed()->get();
+        } else {
+
+            $data1 = User::get();
+        }
+
+        return view('admin.index', compact('data', 'data1'))->with('i', (request()->input('page', 1) - 1) * 4);
     }
 
     /**
@@ -55,7 +60,7 @@ class AdminController extends Controller
     {
         $request->validate([
 
-            'name' => 'required|min:2|max:15|unique:admins',
+            'name' => 'required|min:2|max:15|',
             'email' => 'required|email',
             'password' => 'required|min:4|max:9|',
             'gender' => 'required',
@@ -139,14 +144,45 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
-        User::find($id)->delete();
+        $user->delete();
         return redirect()->route('admin.index')
             ->with('success', 'Admin deleted successfully');
     }
+
     public function show(User $admin)
     {
         return redirect()->route('admin.index');
+    }
+    /**
+
+     * restore specific post
+
+     *
+
+     * @return void
+
+     */
+
+    public function restore($id)
+    {
+        User::withTrashed()->find($id)->restore();
+        return redirect()->back();
+    }
+    /**
+
+     * restore all post
+
+     *
+
+     * @return response()
+
+     */
+
+    public function restoreAll()
+    {
+        User::onlyTrashed()->restore();
+        return redirect()->back();
     }
 }

@@ -51,7 +51,7 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'cname' => 'required',
+            'cname' => 'required|unique:categories',
             'active' => 'required',
 
 

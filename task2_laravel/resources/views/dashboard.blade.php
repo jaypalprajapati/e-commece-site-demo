@@ -64,7 +64,7 @@
                 <tr>
                     <td>{{ ++$i }}</td>
                     <td>{{ $value->name }}</td>
-                    <td>{{ $value->category_id }}</td>
+                    <td>{{ $value->cname }}</td>
                     <td><img src=" {{ asset('public/images/' . $value->image)}}" width="160" height="80"></td>
                     <!-- <td>{{ $value->user_id  }}</td> -->
                     <td>{{ $value->active }}</td>

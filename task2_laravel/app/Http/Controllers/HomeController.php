@@ -17,7 +17,7 @@ class HomeController extends Controller
      */
     public function dashboard()
     {
-        $data = product::latest()->paginate(5);
+        $data =  Product::join('categories','categories.id','=','category_id')->get(['products.*','categories.cname']);
         $datanew['newdata'] = " ";
         $jay = Category::get();
         return view('dashboard', compact('data', 'datanew', 'jay'))

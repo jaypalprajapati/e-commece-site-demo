@@ -16,6 +16,10 @@ image{
 	edit page  image replace OR old image store, 
 	edit page image show and delete image then change photo
      }
+login{
+	login velidation	forgot password (check email then change password)
+	user registration  & login
+	}
 
 filter with categorieslogin time session start and store user valuesdifferent user different model view and crud operation 
 

@@ -62,7 +62,7 @@
         @endif
     </tr>
     <tbody id="tbody">
-        @foreach($data as $key => $value)
+        @foreach($data1 as $key => $value)
         <tr>
             <td>{{$value->id }}</td>
             <td>{{ $value->name }}</td>
