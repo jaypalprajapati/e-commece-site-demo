@@ -15,11 +15,11 @@
     </div>
 </div>
 <div id="msg">
-@if ($message = Session::get('success'))
-<div class="alert alert-success">
-    <p>{{ $message }}</p>
-</div>
-@endif
+    @if ($message = Session::get('success'))
+    <div class="alert alert-success">
+        <p>{{ $message }}</p>
+    </div>
+    @endif
 </div>
 <table class="table table-bordered">
     <tr>
@@ -34,23 +34,23 @@
         <td>{{ $value->cname }}</td>
         <td>{{ $value->active }}</td>
         <td>
-        @if(request()->has('trashed'))
+            @if(request()->has('trashed'))
 
-<a href="{{ route('category.restore', $value->id) }}" class="btn btn-success">Restore</a>
+            <a href="{{ route('category.restore', $value->id) }}" class="btn btn-success">Restore</a>
 
-@else
+            @else
 
-<form action="{{ route('category.destroy',$value->id) }}" method="POST">
+            <form action="{{ route('category.destroy',$value->id) }}" method="POST">
 
-    <a class="btn btn-primary" href="{{ route('category.edit',$value->id) }}">Edit</a>
+                <a class="btn btn-primary" href="{{ route('category.edit',$value->id) }}">Edit</a>
 
-    @csrf
+                @csrf
 
-    @method('DELETE')
+                @method('DELETE')
 
-    <button type="submit" class="btn btn-danger delete">Delete</button>
-</form>
-@endif
+                <button type="submit" class="btn btn-danger delete">Delete</button>
+            </form>
+            @endif
         </td>
     </tr>
     @endforeach

@@ -16,11 +16,11 @@
     </div>
 </div>
 <div id="msg">
-@if ($message = Session::get('success'))
-<div class="alert alert-success">
-    <p>{{ $message }}</p>
-</div>
-@endif
+    @if ($message = Session::get('success'))
+    <div class="alert alert-success">
+        <p>{{ $message }}</p>
+    </div>
+    @endif
 </div>
 <table class="table table-bordered">
     <tr>
@@ -39,7 +39,7 @@
         <td>{{ $value->name }}</td>
         <td>{{ $value->email }}</td>
         <td>{{ $value->gender }}</td>
-        <td> 
+        <td>
             @foreach ($value->hobbies as $values)
             {{$values}}
             @endforeach
@@ -47,13 +47,13 @@
         @if(auth()->user()->type ==' 1')
         <td>
             <form action="{{ route('admin.destroy',$value->id) }}" method="POST">
-           
-            <a class="btn btn-primary" href="{{ route('admin.edit',$value->id) }}">Edit</a>  
+
+                <a class="btn btn-primary" href="{{ route('admin.edit',$value->id) }}">Edit</a>
                 @csrf
                 @method('DELETE')
-                
+
                 <button type="submit" class="btn btn-danger delete  ">Delete</button>
-               
+
             </form>
         </td>
         @endif

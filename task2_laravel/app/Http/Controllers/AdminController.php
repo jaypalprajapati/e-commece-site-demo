@@ -19,8 +19,8 @@ class AdminController extends Controller
     {
         $this->middleware('auth');
     }
-   
-     /**
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -31,7 +31,7 @@ class AdminController extends Controller
         $data = USer::latest()->paginate(3);
         $datanew['newdata'] = " ";
 
-        return view('admin.index',compact('data','datanew'))
+        return view('admin.index', compact('data', 'datanew'))
             ->with('i', (request()->input('page', 1) - 1) * 3);
     }
 
@@ -53,27 +53,26 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
-    $request->validate([
+        $request->validate([
 
-        'name' => 'required|min:2|max:15|unique:admins',
-        'email' => 'required|email',
-        'password' => 'required|min:4|max:9|',
-        'gender' => 'required',
-        'hobbies' => 'required',
-    ]);
-    $user = new User;
-    $user->name = $request->name;
-    $user->email = $request->email;
-    $user->gender = $request->gender;
-    $user->hobbies = $request->hobbies;
-    $user->password = Hash::make($request->password);
-    $user->type = 0;
-    $user->save();
-    $password = Hash::make('password');
-    // User::create($user);
-    return redirect()->route('admin.index')->with('success', 'Admin Successfully Added.');
-
-}
+            'name' => 'required|min:2|max:15|unique:admins',
+            'email' => 'required|email',
+            'password' => 'required|min:4|max:9|',
+            'gender' => 'required',
+            'hobbies' => 'required',
+        ]);
+        $user = new User;
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->gender = $request->gender;
+        $user->hobbies = $request->hobbies;
+        $user->password = Hash::make($request->password);
+        $user->type = 0;
+        $user->save();
+        $password = Hash::make('password');
+        // User::create($user);
+        return redirect()->route('admin.index')->with('success', 'Admin Successfully Added.');
+    }
 
     /**
      * Display the specified resource.
@@ -81,17 +80,17 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    
+
 
     /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
-     */ 
+     */
     public function edit(User $admin)
     {
-        return view('admin.edit',compact('admin'));
+        return view('admin.edit', compact('admin'));
     }
 
     /**
@@ -105,33 +104,33 @@ class AdminController extends Controller
      */
     public function update(Request $request, User $admin)
     {
-        
+
         $request->validate([
             'name' => 'required|min:2|max:15',
-            'email' => 'required|email|unique:users,email,'.$admin->id.',id',
+            'email' => 'required|email|unique:users,email,' . $admin->id . ',id',
             'gender' => 'required',
             //'hobbies' => 'required',
-           
-        ],[
-                'name.required' => 'Name is required',
-                'name.min' => 'Minimum 1 charachers require!!',
-                'name.max' => 'Maximum 15 charachers require!!',
-                'name.unique' => 'Name is already exists!!',
-                'gender'=>'Gender is required',
-                             
-                
-            ]);
 
-         
+        ], [
+            'name.required' => 'Name is required',
+            'name.min' => 'Minimum 1 charachers require!!',
+            'name.max' => 'Maximum 15 charachers require!!',
+            'name.unique' => 'Name is already exists!!',
+            'gender' => 'Gender is required',
+
+
+        ]);
+
+
         // $request_data = $request->all();
         // $request_data['gender'] = 'active'; 
-         
-         //$admin::Update($request->all());
+
+        //$admin::Update($request->all());
         // $admin['hobbies'] = $request->input('hobbies');
-        
+
         $admin->Update($request->all());
         return redirect()->route('admin.index')
-                        ->with('success','admin updated successfully');
+            ->with('success', 'admin updated successfully');
     }
 
     /**
@@ -140,16 +139,14 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id )
+    public function destroy($id)
     {
         User::find($id)->delete();
         return redirect()->route('admin.index')
-                        ->with('success','Admin deleted successfully');
+            ->with('success', 'Admin deleted successfully');
     }
     public function show(User $admin)
-    {   
-        return redirect()->route('admin.index');    
-                       
+    {
+        return redirect()->route('admin.index');
     }
-    
 }

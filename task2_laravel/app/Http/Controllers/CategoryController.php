@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Support\Facades\DB;
+
 class CategoryController extends Controller
 {
     /**
@@ -17,24 +18,18 @@ class CategoryController extends Controller
     {
         $this->middleware('auth');
     }
-    public function index( Request $request)
-    { 
+    public function index(Request $request)
+    {
         $data = Category::latest()->paginate(2);
         if ($request->has('trashed')) {
 
-        $data1 = Category::onlyTrashed()->get();
+            $data1 = Category::onlyTrashed()->get();
+        } else {
 
-    
+            $data1 = Category::get();
+        }
 
-    }else {
-
-        $data1= Category::get();
-
-    }    
-
-    return view('category.index',compact('data','data1'))->with('i', (request()->input('page', 1) - 1) * 2);
-
-       
+        return view('category.index', compact('data', 'data1'))->with('i', (request()->input('page', 1) - 1) * 2);
     }
 
     /**
@@ -58,20 +53,20 @@ class CategoryController extends Controller
         $request->validate([
             'cname' => 'required',
             'active' => 'required',
-           
-            
-        ],[
-                'cname.required' => 'category is required',
-                'active.required' => 'Select any one',
-                
-                
-            ]);
-                $category=$request->all();
-       
-            Category::create($category);
-     
+
+
+        ], [
+            'cname.required' => 'category is required',
+            'active.required' => 'Select any one',
+
+
+        ]);
+        $category = $request->all();
+
+        Category::create($category);
+
         return redirect()->route('category.index')
-                        ->with('success','Category Added successfully.');
+            ->with('success', 'Category Added successfully.');
     }
 
     /**
@@ -83,7 +78,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        return view('category.edit',compact('category'));
+        return view('category.edit', compact('category'));
     }
 
     /**
@@ -99,24 +94,24 @@ class CategoryController extends Controller
         $request->validate([
             'cname' => 'required',
             'active' => 'required',
-           
-           
-        ],[
-                'cname.required' => 'category is required',
-                'active.required' => 'Selecte any one',
-                                  
-            ]);
-            //$admin->Update($request->all());
+
+
+        ], [
+            'cname.required' => 'category is required',
+            'active.required' => 'Selecte any one',
+
+        ]);
+        //$admin->Update($request->all());
         //$category = $request->all();
         $category->update($request->all());
         return redirect()->route('category.index')
-                        ->with('success','Category updated successfully');
+            ->with('success', 'Category updated successfully');
     }
 
     public function show()
     {
-       // return view ('category.index');
-    }    
+        // return view ('category.index');
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -127,28 +122,28 @@ class CategoryController extends Controller
      * 
      */
     public function destroy(Category $category)
-    {       
+    {
         $category->delete();
-    
+
         return redirect()->route('category.index')
-                        ->with('success','Category deleted successfully');
+            ->with('success', 'Category deleted successfully');
     }
 
 
     public function delete($id) //product + category delete
-    {       
-        $data =DB::table('categories')
-                    ->Join('products','categories.id', '=','products.category_id')
-                    ->where('category_id', $id); 
-                    $data->delete();
+    {
+        $data = DB::table('categories')
+            ->Join('products', 'categories.id', '=', 'products.category_id')
+            ->where('category_id', $id);
+        $data->delete();
 
-         DB::table('products')->where('category_id', $id)->delete();                           
+        DB::table('products')->where('category_id', $id)->delete();
         // $data->delete($jay);
         return redirect()->route('category.index')->with('success', 'Data Deleted');
     }
-     
-    
-     /**
+
+
+    /**
 
      * restore specific post
 
@@ -159,20 +154,11 @@ class CategoryController extends Controller
      */
 
     public function restore($id)
-
     {
-
         Category::withTrashed()->find($id)->restore();
-
- 
-
         return redirect()->back();
-
     }
-
-
-
-        /**
+    /**
 
      * restore all post
 
@@ -183,14 +169,8 @@ class CategoryController extends Controller
      */
 
     public function restoreAll()
-
     {
-
         Category::onlyTrashed()->restore();
-
- 
-
         return redirect()->back();
-
     }
 }

@@ -1,43 +1,4 @@
-@extends('layouts.app')
-
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
-
-                <div class="card-body">
-                    @if (session('status'))
-                    <div class="alert alert-success" role="alert">
-                        {{ session('status') }}
-                    </div>
-                    @endif
-
-                    {{ __('You are logged in!') }}
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-@endsection
-
-@extends('admin.app.layout')
-
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>Laravel</title>
-
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
-
-    <!-- Styles -->
-    <style>
+<style>
         /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
         html {
             line-height: 1.15;
@@ -418,112 +379,51 @@
             }
         }
     </style>
+    <style>
+        .button {
+            border-radius: 4px;
+            background-color: #f4511e;
+            border: none;
+            color: #FFFFFF;
+            text-align: center;
+            font-size: 15px;
+            padding: 10px;
+            width: 200px;
+            transition: all 0.5s;
+            cursor: pointer;
+            margin: 5px;
+        }
 
+        .button span {
+            cursor: pointer;
+            display: inline-block;
+            position: relative;
+            transition: 0.5s;
+        }
+
+        .button span:after {
+            content: '\00bb';
+            position: absolute;
+            opacity: 0;
+            top: 0;
+            right: -20px;
+            transition: 0.5s;
+        }
+
+        .button:hover span {
+            padding-right: 25px;
+            color: navy;
+        }
+
+        .button:hover span:after {
+            opacity: 1;
+            right: 0;
+            color: navy;
+        }
+    </style>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" rel="stylesheet">
     <style>
         body {
             font-family: 'Nunito', sans-serif;
         }
     </style>
-</head>
-
-<body class="antialiased">
-    <center>
-        <h2>Welcome E-Commerce Site</h2>
-    </center>
-
-    <div class="relative flex items-top   sm:pt-0">
-        <div class="row" style="margin-top: 5rem;">
-
-            @if (Route::has('login'))
-            <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
-                @auth
-                <a href="{{ url('/home') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Home</a>
-                @else
-                <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Log in</a>
-
-                <!-- @if (Route::has('register'))
-                <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">Register</a>
-                @endif -->
-                @endauth
-            </div>
-            @endif
-        </div>
-    </div>
-
-    <div class="container">
-        <select id="category_id" name="cat_id" class="btn btn-info">
-
-            <option value="">Select</option>
-
-            @foreach($jay as $key => $value)
-
-            <option value="{{ $value->cname}}">{{ $value->cname}}</option>
-
-            @endforeach
-
-        </select>
-        <table class="table table-bordered">
-            <tr style="background-color:navy; color:white;">
-                <th>No</th>
-                <th>Product Name</th>
-                <th>Category Name</th>
-                <th>Product Image</th>
-                <th>Add By</th>
-                <th>Active</th>
-
-            </tr>
-            <tbody id="tbody">
-                @foreach($data as $key => $value)
-                <tr>
-                    <td>{{ ++$i }}</td>
-                    <td>{{ $value->name }}</td>
-                    <td>{{ $value->category_id }}</td>
-                    <td><img src=" {{ asset('public/images/' . $value->image)}}" width="160" height="80"></td>
-                    <td>{{ $value->user_id  }}</td>
-                    <td>{{ $value->active }}</td>
-
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
-    </div>
-    <script>
-        $(document).ready(function() {
-            $('#category_id').change(function() {
-
-                var category = $(this).val();
-                $.ajax({
-                    url: "{{route('filter')}}",
-                    type: "GET",
-                    data: {
-                        'category': category
-                    },
-                    success: function(data) {
-                        var products = data;
-                        var html = '';
-                        if (products.length > 0) {
-                            for (let i = 0; i < products.length; i++) {
-                                html += '<tr>\
-                                        <td>' + i + '</td>\
-                                        <td>' + products[i]['name'] + '</td>\
-                                        <td>' + products[i]['category_id'] + '</td>\
-                                        <td>' + products[i]['image'] + '</td>\
-                                        <td>' + products[i]['user_id'] + '</td>\
-                                        <td>' + products[i]['active'] + '</td>\
-                                        </tr>';
-                            }
-                        } else {
-                            html += '<tr>\
-                                    <td>No Products Found</td>\
-                                    </tr>';
-                        }
-                        $("#tbody").html(html);
-                    }
-                });
-            });
-        });
-    </script>
-</body>
-
-</html>

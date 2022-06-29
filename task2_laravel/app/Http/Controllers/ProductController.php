@@ -32,7 +32,8 @@ class ProductController extends Controller
     }
     public function index(Request $request)
     {
-        $data = Product::join('categories','categories.id','=','category_id')->get(['products.*','categories.cname']);
+         $data = Product::join('categories','categories.id','=','category_id')->get(['products.*','categories.cname']);
+        // $data = Product::latest()->paginate(2);
         // echo($data);
         // exit;
         $jay = Category::get();
@@ -189,35 +190,20 @@ class ProductController extends Controller
     public function restore($id)
 
     {
-
         Product::withTrashed()->find($id)->restore();
-
- 
-
         return redirect()->back();
-
     }
-
-
-
         /**
 
      * restore all post
 
      *
-
      * @return response()
 
      */
-
     public function restoreAll()
-
     {
-
         Product::onlyTrashed()->restore();
-
- 
-
         return redirect()->back();
 
     }

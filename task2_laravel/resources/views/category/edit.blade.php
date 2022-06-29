@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="row"  style="padding-top:80px;">
+<div class="row" style="padding-top:80px;">
     <div class="col-lg-12 margin-tb">
         <div class="pull-left">
             <h2>Edit Category</h2>
@@ -32,8 +32,7 @@
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group">
                 <strong>Category Name:</strong>
-                <input type="text" name="cname" value="{{ $category->cname }}" class="form-control"
-                    placeholder="Category">
+                <input type="text" name="cname" value="{{ $category->cname }}" class="form-control" placeholder="Category">
                 @if ($errors->has('cname'))
                 <span class="text-danger">{{ $errors->first('cname') }}</span>
                 @endif
@@ -46,10 +45,10 @@
                     <option value="">Select</option>
                     <option value="yes" {{ $category->active=="yes"? "selected" : "" }}>Yes</option>
                     <option value="no" {{ $category->active=="no"? "selected" : "" }}>No</option>
-                </select>   
-                    @if ($errors->has('active'))
-                    <span class="text-danger">{{ $errors->first('active') }}</span>
-                    @endif
+                </select>
+                @if ($errors->has('active'))
+                <span class="text-danger">{{ $errors->first('active') }}</span>
+                @endif
             </div>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-12 text-center">

@@ -29,9 +29,9 @@
             <h2>Product Details</h2>
         </div>
         <div class="pull-right">
-        @if(auth()->user()->type ==' 1' || auth()->user()->type ==' 0')
+            @if(auth()->user()->type ==' 1' || auth()->user()->type ==' 0')
             <a class="btn btn-warning" href="product/create">Add New Product</a>
-           @endif
+            @endif
             <select style="float:right;" id="category_id" name="cat_id" class="btn btn-info">
                 <option value="">Select</option>
                 @foreach($jay as $key => $value)
@@ -42,12 +42,12 @@
     </div>
 </div>
 <div id="msg">
-@if ($message = Session::get('success'))
-<div class="alert alert-success">
-    <p>{{ $message }}</p>
-</div>
+    @if ($message = Session::get('success'))
+    <div class="alert alert-success">
+        <p>{{ $message }}</p>
+    </div>
 
-@endif
+    @endif
 </div>
 <table class="table table-bordered">
     <tr>
@@ -64,7 +64,7 @@
     <tbody id="tbody">
         @foreach($data as $key => $value)
         <tr>
-            <td>{{$value->id  }}</td>
+            <td>{{$value->id }}</td>
             <td>{{ $value->name }}</td>
             <td>{{ $value->cname }}</td>
 
@@ -75,19 +75,12 @@
             @if(auth()->user()->type ==' 1' || auth()->user()->type =='0')
             <td>
                 @if(request()->has('trashed'))
-
                 <a href="{{ route('product.restore', $value->id) }}" class="btn btn-success">Restore</a>
-
                 @else
-
                 <form action="{{ route('product.destroy',$value->id) }}" method="POST">
-
                     <a class="btn btn-primary" href="{{ route('product.edit',$value->id) }}">Edit</a>
-
                     @csrf
-
                     @method('DELETE')
-
                     <button type="submit" class="btn btn-danger delete">Delete</button>
                 </form>
                 @endif
@@ -100,21 +93,12 @@
 
 @if(auth()->user()->type ==' 1' || auth()->user()->type ==' 0')
 <div class="float-end" style="text-align:right;">
-
     @if(request()->has('trashed'))
-
     <a href="{{ route('product.index') }}" class="btn btn-info">View All products</a>
-
     <a href="{{ route('product.restoreAll') }}" class="btn btn-success">Restore All</a>
-
     @else
-
-    <a href="{{ route('product.index', ['trashed' => 'product']) }}" class="btn btn-primary">View Deleted
-
-        product</a>
-
+    <a href="{{ route('product.index', ['trashed' => 'product']) }}" class="btn btn-primary">View Deleted product</a>
     @endif
-  
 </div>
 @endif
 <script>
