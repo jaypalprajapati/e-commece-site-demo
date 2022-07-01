@@ -35,19 +35,17 @@
         <td>{{ $value->active }}</td>
         <td>
             @if(request()->has('trashed'))
-
+            <form action="{{ route('category.forcedelete',$value->id) }}" method="GET">
             <a href="{{ route('category.restore', $value->id) }}" class="btn btn-success">Restore</a>
-
-            @else
-
-            <form action="{{ route('category.destroy',$value->id) }}" method="POST">
-
-                <a class="btn btn-primary" href="{{ route('category.edit',$value->id) }}">Edit</a>
-
                 @csrf
-
                 @method('DELETE')
-
+                <button type="submit" class="btn btn-danger delete">Delete</button>
+            </form>
+            @else
+            <form action="{{ route('category.destroy',$value->id) }}" method="POST">
+                <a class="btn btn-primary" href="{{ route('category.edit',$value->id) }}">Edit</a>
+                @csrf
+                @method('DELETE')
                 <button type="submit" class="btn btn-danger delete">Delete</button>
             </form>
             @endif

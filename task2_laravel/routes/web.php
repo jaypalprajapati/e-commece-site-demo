@@ -68,3 +68,5 @@ Route::get('category/restore/{id}', [CategoryController::class, 'restore'])->nam
 
 Route::get('category/restore-all', [CategoryController::class, 'restoreAll'])->name('category.restoreAll');
 
+Route::get('category/forcedelete/{id}', [CategoryController::class, 'forcedelete'])->name('category.forcedelete');
+

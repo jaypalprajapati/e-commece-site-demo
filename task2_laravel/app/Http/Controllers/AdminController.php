@@ -144,13 +144,22 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy(User $user, $id)
     {
-        $user->delete();
+        $user::find($id)->delete();
         return redirect()->route('admin.index')
-            ->with('success', 'Admin deleted successfully');
+            ->with('success', 'Admin move trashed successfully');
     }
 
+    public function ajex_delete($id)
+    {
+        User::find($id)->delete();
+        return response()->json([
+            'success'=>'deleted'
+        ]);
+        // return redirect()->route('admin.index')
+        //     ->with('success', 'Admin deleted successfully');
+    }
     public function show(User $admin)
     {
         return redirect()->route('admin.index');

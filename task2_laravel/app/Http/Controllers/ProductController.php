@@ -38,11 +38,10 @@ class ProductController extends Controller
         // exit;
         $jay = Category::get();
         if ($request->has('trashed')) {
-
             $data1 = Product::onlyTrashed()->get();
         }else {
             $data1= Product::get();
-        }    
+        }       
         return view('product.index',compact('data','jay','data1')) ->with('i', (request()->input('page', 1) - 1) * 2);
     }
 
@@ -54,8 +53,6 @@ class ProductController extends Controller
     public function create()
     { 
         $jay = Category::get();
-
-        
         return view('product.create', compact('jay'));
     }
 
@@ -175,7 +172,12 @@ class ProductController extends Controller
         Product::find($id)->delete();
     
         return redirect()->route('product.index')
-                        ->with('success','Product deleted successfully');
+                        ->with('success','Product move on Trash...!');
+    }
+    public function forcedelete($id)
+    {
+        Product::onlyTrashed()->find($id)->forceDelete();
+        return redirect()->back()->with('success', 'Product is deleted successfully');
     }
      /**
 

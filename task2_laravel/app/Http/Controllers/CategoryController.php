@@ -139,9 +139,13 @@ class CategoryController extends Controller
 
         DB::table('products')->where('category_id', $id)->delete();
         // $data->delete($jay);
-        return redirect()->route('category.index')->with('success', 'Data Deleted');
+        return redirect()->route('category.index')->with('success', 'Category is on move Trash...!');
     }
-
+    public function forcedelete($id)
+    {
+        Category::onlyTrashed()->find($id)->forceDelete();
+        return redirect()->back()->with('success', 'Category is deleted successfully');
+    }
 
     /**
 

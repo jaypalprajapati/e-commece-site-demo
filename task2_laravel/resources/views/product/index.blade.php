@@ -66,7 +66,7 @@
         <tr>
             <td>{{$value->id }}</td>
             <td>{{ $value->name }}</td>
-            <td>{{ $value->cname }}</td>
+            <td>{{ $value->category_id }}</td>
 
             <td><img src=" {{ asset('public/images/' . $value->image)}}" width="160" height="80"></td>
 
@@ -75,8 +75,14 @@
             @if(auth()->user()->type ==' 1' || auth()->user()->type =='0')
             <td>
                 @if(request()->has('trashed'))
+                <form action="{{ route('product.destroy',$value->id) }}" method="POST">
                 <a href="{{ route('product.restore', $value->id) }}" class="btn btn-success">Restore</a>
-                @else
+              
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger delete">Delete</button>
+                </form>
+                 @else
                 <form action="{{ route('product.destroy',$value->id) }}" method="POST">
                     <a class="btn btn-primary" href="{{ route('product.edit',$value->id) }}">Edit</a>
                     @csrf
@@ -127,7 +133,7 @@
                         }
                     } else {
                         html += '<tr>\
-                                    <td>Current</td>\
+                                    <td>No records found</td>\
                                     </tr>';
                     }
                     $("#tbody").html(html);
